@@ -1,0 +1,6 @@
+08/09/2022 14:38:33: Inicio del programa
+08/09/2022 14:38:33: Se crea pila de 30 elementos
+08/09/2022 14:38:33: Se elige opcion 1
+08/09/2022 14:38:33: Se agrega texto ' ' a la pila
+08/09/2022 14:38:33: Se elige opcion 5
+08/09/2022 14:38:33: Fin del programa
