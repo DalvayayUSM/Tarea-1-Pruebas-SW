@@ -118,7 +118,7 @@ public class Pila {
 			System.out.println("Posicion del segundo texto no valida");
 			System.exit(1);
 		}
-		int comp=arreglo[pos1].compareTo(arreglo[pos2]);
+		int comp=arreglo[pos1].length()-arreglo[pos2].length();
 		if (comp>0) {
 			System.out.format("El texto %s es mas largo que el texto %s\n", arreglo[pos1], arreglo[pos2]);
 		} else if(comp<0){
