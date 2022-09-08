@@ -18,7 +18,7 @@ public class Main {
     private static Logger logger = LogManager.getLogger();
 
     public static void main(String args[]) throws IOException {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy - HH.mm.ss");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy-HH.mm.ss");
         LocalDateTime now = LocalDateTime.now();
         String nombre = "LOGS_" + dtf.format(now) + ".txt";
         File file=new File(nombre);
@@ -37,9 +37,14 @@ public class Main {
         boolean flag=true;
         int tamano, opcionMenu, opcionPos, top, pos1, pos2;
         String texto;
+        pw.println(dtf.format(now) + ": Se solicita ingresar tamano de la pila");
         System.out.print("Ingrese n° de elementos a almacenar: ");
         tamano = in.nextInt();
-        //se crea pila del tamano indicado
+        while (tamano <=0) {
+            pw.println(dtf.format(now) + ": Se ingresa un tamano no valido para la pila (tamano " + tamano + "). Se solicita ingresar otro tamano");
+            System.out.print("No se puede crear una pila con el tamaño especificado. Ingrese un tamaño válido: ");
+            tamano = in.nextInt();
+        }
         Pila pila = new Pila(tamano);
         pw.println(dtf.format(now) + ": Se crea pila de " + tamano + " elementos");
 
@@ -62,48 +67,63 @@ public class Main {
                     break;
 
                 case 2:
-                    System.out.format("El texto más largo es: '%s'\n", pila.getTextoMasLargo());
-                    System.out.format("El texto más corto es: '%s'\n", pila.getTextoMasCorto());
-                    pw.println(dtf.format(now) + ": El texto de mayor largo es '" + pila.getTextoMasLargo() + "'");
-                    pw.println(dtf.format(now) + ": El texto de menor largo es '" + pila.getTextoMasCorto() + "'");
+                    if (pila.vacio()) {
+                        System.out.println("La pila está vacía");
+                        pw.println(dtf.format(now) + ": La pila se encuentra vacia");
+                    } else{
+                        System.out.format("El texto más largo es: '%s'\n", pila.getTextoMasLargo());
+                        System.out.format("El texto más corto es: '%s'\n", pila.getTextoMasCorto());
+                        pw.println(dtf.format(now) + ": El texto de mayor largo es '" + pila.getTextoMasLargo() + "'");
+                        pw.println(dtf.format(now) + ": El texto de menor largo es '" + pila.getTextoMasCorto() + "'");
+                    }
                     break;
 
                 case 3:
-                    System.out.format("En la pila hay %d elementos (posiciones válidas desde el 0 al %d)\n", top, top-1);
-                    System.out.print("Seleccione la posición de la pila que quiere ver: ");
-                    opcionPos=in.nextInt();
-                    // verifica que la posicion sea valida
-                    while (opcionPos<0 || opcionPos>=top) {
-                        System.out.print("La posición seleccionada no es válida. Ingresa otra posición: ");
-                        pw.println(dtf.format(now) + ": Se selecciona posicion no valida (posicion " + opcionPos + "). Se solicita ingresar otra posicion");
-                        opcionPos = in.nextInt();
-                    }
+                    if (pila.vacio()) {
+                        System.out.println("La pila está vacía");
+                        pw.println(dtf.format(now) + ": La pila se encuentra vacia");
+                    } else{
+                        System.out.format("En la pila hay %d elementos (posiciones válidas desde el 0 al %d)\n", top, top-1);
+                        System.out.print("Seleccione la posición de la pila que quiere ver: ");
+                        opcionPos=in.nextInt();
+                        // verifica que la posicion sea valida
+                        while (opcionPos<0 || opcionPos>=top) {
+                            System.out.print("La posición seleccionada no es válida. Ingresa otra posición: ");
+                            pw.println(dtf.format(now) + ": Se selecciona posicion no valida (posicion " + opcionPos + "). Se solicita ingresar otra posicion");
+                            opcionPos = in.nextInt();
+                        }
 
-                    System.out.println("\nTexto impreso: " + pila.imprimirTexto(opcionPos));
-                    pw.println(dtf.format(now) + ": Se imprime texto '" + pila.imprimirTexto(opcionPos) + "'");
+                        System.out.println("\nTexto impreso: " + pila.imprimirTexto(opcionPos));
+                        pw.println(dtf.format(now) + ": Se imprime texto '" + pila.imprimirTexto(opcionPos) + "'");
+                    }                    
                     break;
 
                 case 4:
-                    System.out.format("En la pila hay %d elementos (posiciones válidas desde el 0 al %d)\n", top, top - 1);
-                    System.out.print("Ingrese la posición del primer texto a comparar: ");
-                    pos1=p1.nextInt();
-                    while (pos1<0 || pos1>=top) {
-                        System.out.print("La posición seleccionada no es válida. Ingresa otra posición: ");
-                        pw.println(dtf.format(now) + ": Se selecciona posicion no valida para primer texto (posición " + pos1 + "). Se solicita ingresar otra posicion");
-                        pos1 = p1.nextInt();
-                    }
+                    if (pila.vacio()) {
+                        System.out.println("La pila está vacía");
+                        pw.println(dtf.format(now) + ": La pila se encuentra vacia");
+                    } else{
+                        System.out.format("En la pila hay %d elementos (posiciones válidas desde el 0 al %d)\n", top, top - 1);
+                        System.out.print("Ingrese la posición del primer texto a comparar: ");
+                        pos1=p1.nextInt();
+                        while (pos1<0 || pos1>=top) {
+                            System.out.print("La posición seleccionada no es válida. Ingresa otra posición: ");
+                            pw.println(dtf.format(now) + ": Se selecciona posicion no valida para primer texto (posición " + pos1 + "). Se solicita ingresar otra posicion");
+                            pos1 = p1.nextInt();
+                        }
 
-                    System.out.print("Ingrese la posición del segundo texto a comparar: ");
-                    pos2=p2.nextInt();
-                    while (pos2< 0 || pos2 >=top) {
-                        System.out.print("La posición seleccionada no es válida. Ingresa otra posición: ");
-                        pw.println(dtf.format(now) + ": Se selecciona posicion no valida para segundo texto (posición " + pos2 + "). Se solicita ingresar otra posicion");
-                        pos2 = p2.nextInt();
-                    }
+                        System.out.print("Ingrese la posición del segundo texto a comparar: ");
+                        pos2=p2.nextInt();
+                        while (pos2< 0 || pos2 >=top) {
+                            System.out.print("La posición seleccionada no es válida. Ingresa otra posición: ");
+                            pw.println(dtf.format(now) + ": Se selecciona posicion no valida para segundo texto (posición " + pos2 + "). Se solicita ingresar otra posicion");
+                            pos2 = p2.nextInt();
+                        }
 
-                    System.out.println();
-                    pila.compararTamanos(pos1, pos2);
-                    pw.println(dtf.format(now) + ": Se comparan los textos en las posiciones " + pos1 + " y " + pos2);
+                        System.out.println();
+                        pila.compararTamanos(pos1, pos2);
+                        pw.println(dtf.format(now) + ": Se comparan los textos en las posiciones " + pos1 + " y " + pos2);
+                    }                    
                     break;
 
                 case 5:
