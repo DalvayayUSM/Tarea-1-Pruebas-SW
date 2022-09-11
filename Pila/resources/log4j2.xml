@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="WARN">
+    <Properties>
+        <Property name="filename">./logs</Property>
+    </Properties>
+    <Appenders>
+        <RollingFile name="file" fileName="${filename}/log.log" filePattern="${filename}/log-%d{HH-mm-ss}.log">
+            <PatternLayout>
+                <pattern>%d{HH:mm:ss} [%t] - %msg%n</pattern>
+            </PatternLayout>
+            <SizeBasedTriggeringPolicy size="1 KB"/>
+        </RollingFile>
+        <Console name="ABC" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss} [%t] - %msg%n" />
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Looger name="Pila" level="info" additivity="false">
+            <AppenderRef ref="file"/>
+            <AppenderRef ref="ABC"/>
+        </Looger>
+        <Root level="trace">
+            <AppenderRef ref="ABC" />
+            <AppenderRef ref="file" />
+        </Root>
+    </Loggers>
+</configuration>

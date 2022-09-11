@@ -11,20 +11,20 @@ import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-// import org.apache.logging.log4j.Marker;
 
 public class Main {
     //creacion de logger
-    private static Logger logger = LogManager.getLogger();
+    private static Logger logger = LogManager.getLogger("Pila");
 
     public static void main(String args[]) throws IOException {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy-HH.mm.ss");
         LocalDateTime now = LocalDateTime.now();
-        String nombre = "LOGS_" + dtf.format(now) + ".txt";
+        String nombre = "LOGS.txt";
         File file=new File(nombre);
         FileWriter fw=new FileWriter(file);
         PrintWriter pw=new PrintWriter(fw);
-        logger.info("Hola");
+        logger.info("Inicio del programa");
+        logger.error("Chao");
         dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         // logger.info("Inicio del programa");
         pw.println(dtf.format(now) + ": Inicio del programa");
@@ -44,13 +44,16 @@ public class Main {
             now = LocalDateTime.now();
             pw.println(dtf.format(now) + ": Se ingresa un tamano no valido para la pila (tamano " + tamano + "). Se solicita ingresar otro tamano");
             System.out.print("No se puede crear una pila con el tamaño especificado. Ingrese un tamaño válido: ");
+            logger.error("Tamaño no valido");
             tamano = in.nextInt();
         }
         Pila pila = new Pila(tamano);
         pw.println(dtf.format(now) + ": Se crea pila de " + tamano + " elementos");
+        logger.info("Se crea pila");
 
         while (flag) {
             now = LocalDateTime.now();
+            logger.info("Se despliega menu");
             top = pila.getTop();
             System.out.println("\t\t\t  --MENU--");
             System.out.println("1. Agregar texto a la pila\t 2. Ver texto más largo y más corto");
@@ -66,12 +69,14 @@ public class Main {
                         System.out.println("La pila está llena");
                         now = LocalDateTime.now();
                         pw.println(dtf.format(now) + ": La pila esta llena");
+                        logger.error("Pila llena, no se pueden agregar elementos");
                     } else{
                         System.out.print("Ingrese texto: ");
                         texto=st.nextLine();
                         pila.push(texto);
                         now = LocalDateTime.now();
                         pw.println(dtf.format(now) + ": Se agrega texto '" + texto + "' a la pila");
+                        logger.info("Se agrega texto a la pila");
                     }
                     break;
 
@@ -80,12 +85,14 @@ public class Main {
                         System.out.println("La pila está vacía");
                         now = LocalDateTime.now();
                         pw.println(dtf.format(now) + ": La pila se encuentra vacia");
+                        logger.error("Pila vacia");
                     } else{
                         System.out.format("El texto más largo es: '%s'\n", pila.getTextoMasLargo());
                         System.out.format("El texto más corto es: '%s'\n", pila.getTextoMasCorto());
                         now = LocalDateTime.now();
                         pw.println(dtf.format(now) + ": El texto de mayor largo es '" + pila.getTextoMasLargo() + "'");
                         pw.println(dtf.format(now) + ": El texto de menor largo es '" + pila.getTextoMasCorto() + "'");
+                        logger.info("Se muestra texto mas largo y mas corto");
                     }
                     break;
 
@@ -94,14 +101,17 @@ public class Main {
                         System.out.println("La pila está vacía");
                         now = LocalDateTime.now();
                         pw.println(dtf.format(now) + ": La pila se encuentra vacia");
+                        logger.error("Pila vacia");
                     } else{
                         System.out.format("En la pila hay %d elementos (posiciones válidas desde el 0 al %d)\n", top, top-1);
                         System.out.print("Seleccione la posición de la pila que quiere ver: ");
                         opcionPos=in.nextInt();
                         // verifica que la posicion sea valida
                         while (opcionPos<0 || opcionPos>=top) {
+
                             now = LocalDateTime.now();
                             pw.println(dtf.format(now) + ": Se selecciona posicion no valida (posicion " + opcionPos + "). Se solicita ingresar otra posicion");
+                            logger.error("Posicion de pila no valida");
                             System.out.print("La posición seleccionada no es válida. Ingresa otra posición: ");
                             opcionPos = in.nextInt();
                         }
@@ -109,6 +119,7 @@ public class Main {
                         System.out.println("\nTexto impreso: " + pila.imprimirTexto(opcionPos));
                         now = LocalDateTime.now();
                         pw.println(dtf.format(now) + ": Se imprime texto '" + pila.imprimirTexto(opcionPos) + "'");
+                        logger.info("Se imprime texto");
                     }                    
                     break;
 
@@ -117,23 +128,27 @@ public class Main {
                         System.out.println("La pila está vacía");
                         now = LocalDateTime.now();
                         pw.println(dtf.format(now) + ": La pila se encuentra vacia");
+                        logger.error("Pila vacia");
                     } else{
                         System.out.format("En la pila hay %d elementos (posiciones válidas desde el 0 al %d)\n", top, top - 1);
                         System.out.print("Ingrese la posición del primer texto a comparar: ");
                         pos1=p1.nextInt();
                         while (pos1<0 || pos1>=top) {
+                            pw.println(dtf.format(now) + ": Se selecciona posicion no valida para primer texto (posición " + pos1 + "). Se solicita ingresar otra posicion");
+                            logger.error("Primera posicion de pila no valida");
                             System.out.print("La posición seleccionada no es válida. Ingresa otra posición: ");
                             now = LocalDateTime.now();
-                            pw.println(dtf.format(now) + ": Se selecciona posicion no valida para primer texto (posición " + pos1 + "). Se solicita ingresar otra posicion");
+                            
                             pos1 = p1.nextInt();
                         }
 
                         System.out.print("Ingrese la posición del segundo texto a comparar: ");
                         pos2=p2.nextInt();
                         while (pos2< 0 || pos2 >=top) {
+                            logger.error("Segunda posicion de pila no valida");
+                            pw.println(dtf.format(now) + ": Se selecciona posicion no valida para segundo texto (posición " + pos2 + "). Se solicita ingresar otra posicion");
                             System.out.print("La posición seleccionada no es válida. Ingresa otra posición: ");
                             now = LocalDateTime.now();
-                            pw.println(dtf.format(now) + ": Se selecciona posicion no valida para segundo texto (posición " + pos2 + "). Se solicita ingresar otra posicion");
                             pos2 = p2.nextInt();
                         }
 
@@ -141,6 +156,7 @@ public class Main {
                         pila.compararTamanos(pos1, pos2);
                         now = LocalDateTime.now();
                         pw.println(dtf.format(now) + ": Se comparan los textos en las posiciones " + pos1 + " y " + pos2);
+                        logger.info("Se realiza comparacion de textos");
                     }                    
                     break;
 
@@ -149,12 +165,14 @@ public class Main {
                     System.out.println("Fin del programa");
                     now = LocalDateTime.now();
                     pw.println(dtf.format(now) + ": Fin del programa");
+                    logger.info("Fin del programa");
                     break;
                     
                 default:
-                System.out.println("Opción no válida, ingrese una opción valida");
-                now = LocalDateTime.now();
-                pw.println(dtf.format(now) + ": Se selecciona opcion no valida (opcion " + opcionMenu + "). Se solicita ingresar otra opcion");
+                    System.out.println("Opción no válida, ingrese una opción valida");
+                    now = LocalDateTime.now();
+                    pw.println(dtf.format(now) + ": Se selecciona opcion no valida (opcion " + opcionMenu + "). Se solicita ingresar otra opcion");
+                    logger.error("Opcion de menu no valida");
                     break;
             }
         }
