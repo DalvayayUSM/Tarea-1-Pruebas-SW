@@ -12,7 +12,7 @@ Este programa consiste en una implementación de una pila que permite almacenar 
 * Comparar los tamaños de dos textos
 
 ## Instalación
-Para instalar este programa, basta con descargar los archivos que se encuentran en el [repositorio](https://github.com/DalvayayUSM/Tarea-1-Pruebas-SW) y abrirlos en Visual Studio Code.
+Para instalar este programa, basta con descargar los archivos que se encuentran en el [repositorio](https://github.com/DalvayayUSM/Tarea-1-Pruebas-SW), abrirlos en Visual Studio Code (u otro editor de preferencia) y ejecutarlos desde ahí.
 
 ## Cómo usar
 Al iniciar el programa, se le pedirá ingresar el tamaño de la pila.
