@@ -12,7 +12,7 @@ Este programa consiste en una implementación de una pila que permite almacenar 
 * Comparar los tamaños de dos textos
 
 ## Instalación
-Para instalar este programa, basta con descargar los archivos que se encuentran en el [repositorio](https://github.com/DalvayayUSM/Tarea-1-Pruebas-SW), abrirlos en Visual Studio Code (u otro editor de preferencia) y ejecutarlos desde ahí.
+Para instalar este programa, basta con descargar los archivos que se encuentran en el [repositorio](https://github.com/DalvayayUSM/Tarea-1-Pruebas-SW), abrirlos en Visual Studio Code (u otro editor de preferencia) y ejecutarlos desde ahí. IMPORTANTE: Para la correcta ejecución del programa, se debe abrir la carpeta "Pila". Si no se hace esto, el programa puede mostrar error con las librerías de log4j2.
 
 ## Cómo usar
 Al iniciar el programa, se le pedirá ingresar el tamaño de la pila.
